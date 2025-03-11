@@ -28,32 +28,30 @@ function App() {
     };
   }, []);
 
-  const preprocessImage = (imageSrc) => {
-    const img = new Image();
-    img.src = imageSrc;
-    img.onload = () => {
-      let src = cv.imread(img);
-      let dst = new cv.Mat();
-      cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
-      cv.imshow("processedCanvas", dst);
-      src.delete();
-      dst.delete();
-    };
-  };
-
   useEffect(() => {
     cv["onRuntimeInitialized"] = () => {
       console.log("OpenCV loaded");
     };
   }, []);
 
-  const loadImage = (src) =>
-    new Promise((resolve) => {
+  const preprocessImage = (imageSrc) => {
+    return new Promise((resolve) => {
       const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => resolve(img);
-      img.src = src;
+      img.src = imageSrc;
+      img.onload = () => {
+        let src = cv.imread(img);
+        let dst = new cv.Mat();
+        cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
+        cv.threshold(dst, dst, 128, 255, cv.THRESH_BINARY);
+        cv.GaussianBlur(dst, dst, new cv.Size(3, 3), 0);
+        cv.imshow("processedCanvas", dst);
+        const processedImage = document.getElementById("processedCanvas").toDataURL();
+        src.delete();
+        dst.delete();
+        resolve(processedImage);
+      };
     });
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -63,6 +61,13 @@ function App() {
     }
   };
 
+  const cleanText = (text) => {
+    return text
+      .replace(/[^\w\s\n]/g, "")
+      .replace(/[ ]+/g, " ")
+      .trim();
+  };
+
   const extractText = async () => {
     if (!image) return;
 
@@ -70,22 +75,25 @@ function App() {
     setProgress(0);
 
     try {
-      const { data: { text } } = await Tesseract.recognize(image, "eng", {
+      const processedImage = await preprocessImage(image);
+
+      const { data: { text } } = await Tesseract.recognize(processedImage, "eng", {
         logger: (m) => {
           if (m.status === "recognizing text") {
             setProgress(Math.round(m.progress * 100));
           }
         },
+        tessedit_pageseg_mode: "6",
       });
 
-      setText(text.trim());
+      const cleanedText = cleanText(text);
+      setText(cleanedText);
     } catch (error) {
       console.error("Error extracting text:", error);
     } finally {
       setIsLoading(false);
     }
   };
-
 
   return (
     <div className="App">
@@ -100,6 +108,7 @@ function App() {
       <motion.h1 className="title" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
         Image to Text Extractor
       </motion.h1>
+
       <div className="upload-container">
         <label htmlFor="file-upload" className="upload-label">
           {image ? "Change Image" : "Upload Image"}
@@ -133,8 +142,12 @@ function App() {
           </div>
         </motion.div>
       )}
+
       {showToast && <div className="toast">Copied to clipboard!</div>}
+
       <footer className="footer">Developed & Designed by Vishal Mokashi | Frontend Developer</footer>
+
+      <canvas id="processedCanvas" style={{ display: "none" }}></canvas>
     </div>
   );
 }
