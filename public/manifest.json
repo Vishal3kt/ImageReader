@@ -1,0 +1,20 @@
+{
+    "name": "ImageReader By VM",
+    "short_name": "ImageReader",
+    "icons": [
+        {
+            "src": "logo.webp",
+            "sizes": "192x192",
+            "type": "image/png/webp"
+        },
+        {
+            "src": "logo.webp",
+            "sizes": "512x512",
+            "type": "image/png/webp"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#4a90e2",
+    "background_color": "#ffffff"
+}
