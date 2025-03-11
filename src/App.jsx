@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tesseract from "tesseract.js";
 import { motion } from "framer-motion";
 import logo from "../public/logo.webp";
@@ -10,6 +10,38 @@ function App() {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      setInstallPrompt(event);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    window.addEventListener("appinstalled", () => setInstallPrompt(null));
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      window.removeEventListener("appinstalled", () => setInstallPrompt(null));
+    };
+  }, []);
+
+
+  const handleInstallClick = () => {
+    if (installPrompt) {
+      installPrompt.prompt();
+      installPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("PWA Installed");
+        } else {
+          console.log("PWA Installation dismissed");
+        }
+        setInstallPrompt(null);
+      });
+    }
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -55,6 +87,12 @@ function App() {
   return (
     <div className="App">
       <img src={logo} alt="App Logo" className="app-logo" />
+
+      {installPrompt && (
+        <button onClick={handleInstallClick} className="install-button">
+          Download PWA
+        </button>
+      )}
 
       <motion.h1 className="title" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
         Image to Text Extractor
