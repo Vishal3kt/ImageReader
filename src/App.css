@@ -291,3 +291,17 @@
 .install-button:hover {
   background-color: #0056b3;
 }
+
+.share-button {
+  background-color: #25D366;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.share-button:hover {
+  background-color: #1DA851;
+}

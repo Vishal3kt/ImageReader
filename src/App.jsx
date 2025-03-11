@@ -43,6 +43,12 @@ function App() {
     }
   };
 
+  const shareToWhatsApp = () => {
+    const message = encodeURIComponent(text);
+    const whatsappURL = `https://wa.me/?text=${message}`;
+    window.open(whatsappURL, "_blank");
+  };
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -124,6 +130,11 @@ function App() {
           <div className="button-group">
             <button className="copy-button" onClick={copyToClipboard}>Copy</button>
             <button className="clear-button" onClick={clearText}>Clear</button>
+            {text && (
+              <button className="share-button" onClick={shareToWhatsApp}>
+                Share to WhatsApp
+              </button>
+            )}
           </div>
         </motion.div>
       )}
