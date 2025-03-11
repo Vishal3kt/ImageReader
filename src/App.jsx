@@ -123,7 +123,7 @@ function App() {
       {text && (
         <motion.div className="text-result" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <h2>Extracted Text:</h2>
-          <pre>{text}</pre>
+          <pre style={{ textWrap: "auto" }}>{text}</pre>
           <div className="button-group">
             <button className="copy-button" onClick={() => navigator.clipboard.writeText(text)}>Copy</button>
             <button className="clear-button" onClick={() => setText("")}>Clear</button>
