@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@techstark/opencv-js": "^4.10.0-release.1",
     "framer-motion": "^12.4.11",
+    "opencv.js": "^1.2.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tesseract.js": "^6.0.0",
