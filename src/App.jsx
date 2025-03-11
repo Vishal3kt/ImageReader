@@ -34,9 +34,9 @@ function App() {
       installPrompt.prompt();
       installPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === "accepted") {
-          console.log("PWA Installed");
+          // console.log("PWA Installed");
         } else {
-          console.log("PWA Installation dismissed");
+          // console.log("PWA Installation dismissed");
         }
         setInstallPrompt(null);
       });
@@ -77,7 +77,7 @@ function App() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+    setTimeout(() => setShowToast(false), 2000);
   };
 
   const clearText = () => {
@@ -90,7 +90,7 @@ function App() {
 
       {installPrompt && (
         <button onClick={handleInstallClick} className="install-button">
-          Download PWA
+          Download APP
         </button>
       )}
 
@@ -107,15 +107,16 @@ function App() {
             <img src={image} alt="Uploaded" />
           </motion.div>
         )}
+        {image && (
+          <>
+            <button className="extract-button" onClick={extractText} disabled={isLoading}>
+              {isLoading ? `Extracting... ${progress}%` : "Extract Text"}
+            </button>
+            {isLoading && <div className="progress-bar-container"><div className="progress-bar" style={{ width: `${progress}%` }}></div></div>}
+          </>
+        )}
       </div>
-      {image && (
-        <>
-          <button className="extract-button" onClick={extractText} disabled={isLoading}>
-            {isLoading ? `Extracting... ${progress}%` : "Extract Text"}
-          </button>
-          {isLoading && <div className="progress-bar-container"><div className="progress-bar" style={{ width: `${progress}%` }}></div></div>}
-        </>
-      )}
+
       {text && (
         <motion.div className="text-result" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <h2>Extracted Text:</h2>
@@ -127,7 +128,7 @@ function App() {
         </motion.div>
       )}
       {showToast && <div className="toast">Copied to clipboard!</div>}
-      <footer className="footer">Developed & Designed with ❤️ by Vishal Mokashi</footer>
+      <footer className="footer">Developed & Designed by Vishal Mokashi | Frontend Developer</footer>
     </div>
   );
 }

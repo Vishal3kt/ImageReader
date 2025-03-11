@@ -1,6 +1,6 @@
 {
-    "name": "ImageReader By VM",
-    "short_name": "ImageReader",
+    "name": "Image Reader By VM",
+    "short_name": "Image Reader",
     "icons": [
         {
             "src": "logo.webp",

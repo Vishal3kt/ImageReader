@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
   font-family: "Jost", sans-serif;
@@ -8,7 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 0 8px;
 }
 
 .app-logo {
@@ -172,6 +178,10 @@
     width: 90px;
   }
 
+  .toast {
+    display: none;
+  }
+
   .title {
     font-size: 22px;
   }
@@ -203,6 +213,10 @@
 @media (min-width: 481px) and (max-width: 768px) {
   .upload-container {
     max-width: 600px;
+  }
+
+  .toast {
+    display: none;
   }
 
   .text-result {
