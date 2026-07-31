@@ -1,20 +1,28 @@
 {
-    "name": "Image Reader By VM",
-    "short_name": "Image Reader",
-    "icons": [
-        {
-            "src": "logo.webp",
-            "sizes": "192x192",
-            "type": "image/png/webp"
-        },
-        {
-            "src": "logo.webp",
-            "sizes": "512x512",
-            "type": "image/png/webp"
-        }
-    ],
-    "start_url": ".",
-    "display": "standalone",
-    "theme_color": "#4a90e2",
-    "background_color": "#ffffff"
+  "name": "Image Reader By VM",
+  "short_name": "Image Reader",
+  "description": "Extract text from images using OCR.",
+  "lang": "en",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone"],
+  "orientation": "portrait",
+  "theme_color": "#4a90e2",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+    "src": "/logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "public/logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
 }
