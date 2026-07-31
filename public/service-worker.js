@@ -4,7 +4,8 @@ const urlsToCache = [
   "/",
   "/index.html",
   "/manifest.json",
-  "/logo.webp"
+  "/icon-192.png",
+  "/icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
