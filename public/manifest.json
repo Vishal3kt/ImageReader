@@ -19,7 +19,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "public/logo.webp",
+      "src": "logo.webp",
       "sizes": "512x512",
       "type": "image/webp",
       "purpose": "any maskable"
